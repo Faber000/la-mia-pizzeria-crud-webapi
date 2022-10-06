@@ -80,6 +80,10 @@ namespace la_mia_pizzeria_model.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Update(int id, Pizza formData)
         {
+            if (!ModelState.IsValid)
+            {
+                return View("Update", formData);
+            }
 
             Pizzeria context = new Pizzeria();
             
