@@ -1,0 +1,41 @@
+﻿@model List<Pizza>
+
+@{
+    int count = 1;
+}
+<a href="@Url.Action("Create","Pizza")"><button class="create-button">Inserisci nuova Pizza</button></a>
+<div class="pizza-container d-flex flex-wrap justify-content-center align-items-center">
+    @foreach (Pizza pizza in Model)
+    {
+        <div class="card d-flex flex-row">
+            <div>
+                <image class="pizza-img" src="@pizza.Immagine"></image>
+            </div>
+
+            <div class="d-flex flex-column justify-content-center mx-4">
+                <div><h4>@pizza.Nome</h4></div>
+                <div>Ingredienti: @pizza.Descrizione</div>
+                <div>Prezzo: <b>@pizza.Prezzo $</b> </div>
+                <div class="d-flex flex-row">
+                    <a href="@Url.Action("Details", "Pizza", new { id = pizza.Id})">
+                    <button>Dettagli</button>
+                    </a>
+
+                    <a href="@Url.Action("Update", "Pizza", new { id = pizza.Id})">
+                        <button>Modifica</button>
+                    </a>
+
+                    <form asp-controller="Pizza" asp-action="Delete" asp-route-id="@pizza.Id" method="post">
+                        @Html.AntiForgeryToken()
+                        <button type="submit">Elimina</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        count++;
+    }
+</div>
+
+
+
+    

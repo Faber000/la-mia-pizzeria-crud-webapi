@@ -1,0 +1,65 @@
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    font-family: Candara;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+    background-color: #f7ede2;
+}
+
+.card {
+    width: 550px;
+    height: 200px;
+    margin: 30px;
+    border: 0;
+    border-radius: 15px;
+    background-color: #eae2b7;
+    overflow-x: hidden;
+}
+
+.pizza-img {
+    width: 250px;
+    height: 200px;
+}
+
+button {
+    width: 80px;
+    height: 30px;
+    background-color: #f7ede2;
+    margin-top: 10px;
+    border: 1px solid lightgray;
+    border-radius: 10px;
+    margin-right: 8px;
+}
+
+.create-button {
+    background-color: #eae2b7;
+    width: 200px;
+}
+
+.submit-button {
+    background-color: #eae2b7;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+header, footer {
+    background-color: #eae2b7;
+}
