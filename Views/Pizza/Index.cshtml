@@ -1,8 +1,5 @@
 ﻿@model List<Pizza>
 
-@{
-    int count = 1;
-}
 <a href="@Url.Action("Create","Pizza")"><button class="create-button">Inserisci nuova Pizza</button></a>
 <div class="pizza-container d-flex flex-wrap justify-content-center align-items-center">
     @foreach (Pizza pizza in Model)
@@ -32,7 +29,6 @@
                 </div>
             </div>
         </div>
-        count++;
     }
 </div>
 

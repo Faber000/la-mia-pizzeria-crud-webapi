@@ -34,10 +34,11 @@ namespace la_mia_pizzeria_crud_mvc
     public class Pizzeria : DbContext
     {
         public DbSet<Pizza> Pizze { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Data Source=localhost;Initial Catalog=db-pizza;Integrated Security=True");
+            optionsBuilder.UseSqlServer("Data Source=localhost;Initial Catalog=pizzeria-db;Integrated Security=True");
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿@model Pizza
+﻿@model PizzaCategories
 
 <div class="container">
 
@@ -6,35 +6,48 @@
         <h1 class="text-center mb-4">Stai modificando una Pizza</h1>
     </div>
 
-    <form asp-controller="Pizza" asp-action="Update" method="post" asp-route-id ="@Model.Id">
+    <form asp-controller="Pizza" asp-action="Update" method="post" asp-route-id ="@Model.Pizza.Id">
         @Html.AntiForgeryToken()
 
         <div class="mb-4">
             <h3>Nome: </h3>
-            <input asp-for="Nome" />
-            <span asp-validation-for="Nome" class="text-danger"></span>
+            <input asp-for="Pizza.Nome" />
+            <span asp-validation-for="Pizza.Nome"></span>
 
         </div>
 
         <div class="mb-4">
             <h3>Descrizione: </h3>
-            <input asp-for="Descrizione" />
-            <span asp-validation-for="Descrizione" class="text-danger"></span>
+            <input asp-for="Pizza.Descrizione" />
+            <span asp-validation-for="Pizza.Descrizione"></span>
 
         </div>
 
         <div class="mb-4">
             <h3>Immagine: </h3>
-            <input asp-for="Immagine" />
-            <span asp-validation-for="Immagine" class="text-danger"></span>
+            <input asp-for="Pizza.Immagine" />
+            <span asp-validation-for="Pizza.Immagine"></span>
 
         </div>
 
         <div class="mb-4">
             <h3>Prezzo: </h3>
-            <input asp-for="Prezzo" />
-            <span asp-validation-for="Prezzo" class="text-danger"></span>
+            <input asp-for="Pizza.Prezzo" />
+            <span asp-validation-for="Pizza.Prezzo"></span>
 
+        </div>
+
+        <div class="mb-4">
+            <h3>Categoria: </h3>
+            <select asp-for="Pizza.CategoryId">
+                @foreach (Category category in Model.Categories)
+                {
+                 
+                    <option value="@category.Id">@category.Titolo</option>
+                    
+                }
+            </select>
+            <span asp-validation-for="Pizza.CategoryId"></span>
         </div>
 
         <div>

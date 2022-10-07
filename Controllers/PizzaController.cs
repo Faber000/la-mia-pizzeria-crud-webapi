@@ -1,7 +1,12 @@
 ﻿using la_mia_pizzeria_crud_mvc;
 using la_mia_pizzeria_crud_mvc.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
+using System.Linq.Expressions;
 
 namespace la_mia_pizzeria_model.Controllers
 {
@@ -19,27 +24,33 @@ namespace la_mia_pizzeria_model.Controllers
         {
             using (Pizzeria context = new Pizzeria())
             {
-                IQueryable<Pizza> pizzas = context.Pizze;
+ 
+                List<Pizza> pizze = context.Pizze.ToList();
 
-                return View("Index", pizzas.ToList());
+                return View("Index", pizze);
             }
         }
 
         [HttpGet]
         public IActionResult Details(int id)
         {
-            using(Pizzeria context = new Pizzeria())
+            using (Pizzeria context = new Pizzeria())
             {
-                Pizza pizzaFound = context.Pizze.Where(pizza => pizza.Id == id).FirstOrDefault();
 
-                return View(pizzaFound);
+                Pizza pizza = context.Pizze.Where(pizza => pizza.Id == id).Include("Category").FirstOrDefault();
+
+                return View("Details", pizza);
             }
         }
 
         [HttpGet]
         public IActionResult Create()
         {
-            return View();
+            PizzaCategories pizzaCategories = new PizzaCategories();
+
+            pizzaCategories.Categories = new Pizzeria().Categories.ToList();
+
+            return View(pizzaCategories);
         }
 
         [HttpGet]
@@ -47,71 +58,76 @@ namespace la_mia_pizzeria_model.Controllers
         {
             using (Pizzeria context = new Pizzeria())
             {
-                Pizza pizzaFound = context.Pizze.Where(pizza => pizza.Id == id).FirstOrDefault();
+                Pizza pizza = context.Pizze.Where(pizza => pizza.Id == id).FirstOrDefault();
 
-                return View(pizzaFound);
+                PizzaCategories pizzaCategories = new PizzaCategories();
+
+                pizzaCategories.Pizza = pizza; 
+
+                pizzaCategories.Categories = context.Categories.ToList(); 
+
+                return View(pizzaCategories);
+
             }
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Pizza formData)
+        public IActionResult Create(PizzaCategories formData)
         {
+            Pizzeria context = new Pizzeria();
+
             if (!ModelState.IsValid)
             {
+                formData.Categories = context.Categories.ToList();
                 return View("Create", formData);
             }
-            
-            using (Pizzeria context = new Pizzeria())
-            {
-                Pizza newPizza = new Pizza();
-                newPizza.Nome = formData.Nome;
-                newPizza.Descrizione = formData.Descrizione;
-                newPizza.Immagine = formData.Immagine;
-                newPizza.Prezzo = formData.Prezzo;
 
-                context.Pizze.Add(newPizza);
-                context.SaveChanges();
-                return RedirectToAction("Index");
-            }
+            context.Pizze.Add(formData.Pizza);
+
+            context.SaveChanges();
+
+            return RedirectToAction("Index");
+
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Update(int id, Pizza formData)
+        public IActionResult Update(int id, PizzaCategories formData)
         {
-            if (!ModelState.IsValid)
+            using (Pizzeria context = new Pizzeria())
             {
-                return View("Update", formData);
+                if (!ModelState.IsValid)
+                {
+                    formData.Categories = context.Categories.ToList();
+                    return View("Update", formData);
+                }
+
+                formData.Pizza.Id = id;
+
+                context.Pizze.Update(formData.Pizza);
+
+                context.SaveChanges();
+
+                return RedirectToAction("Index");
+
             }
-
-            Pizzeria context = new Pizzeria();
-            
-            Pizza pizza = context.Pizze.Where(pizza => pizza.Id == id).FirstOrDefault();
-            pizza.Nome = formData.Nome;
-            pizza.Descrizione = formData.Descrizione;
-            pizza.Immagine = formData.Immagine;
-            pizza.Prezzo = formData.Prezzo;
-
-            context.SaveChanges();
-            return RedirectToAction("Index");
-            
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Delete(int id)
         {
+            using (Pizzeria context = new Pizzeria())
+            {
+                Pizza pizza = context.Pizze.Where(pizza => pizza.Id == id).FirstOrDefault();
 
-            Pizzeria context = new Pizzeria();
+                context.Pizze.Remove(pizza);
 
-            Pizza pizza = context.Pizze.Where(pizza => pizza.Id == id).FirstOrDefault();
-            
-            context.Pizze.Remove(pizza);
+                context.SaveChanges();
 
-            context.SaveChanges();
-            return RedirectToAction("Index");
-
+                return RedirectToAction("Index");
+            }
         }
 
         public IActionResult Privacy()

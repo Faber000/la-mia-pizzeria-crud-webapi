@@ -19,8 +19,10 @@ public class Pizza
         [Required(ErrorMessage = "Il campo è obbligatorio")]
         [Range(4, 15, ErrorMessage = "Il prezzo non è valido")]
         public double Prezzo { get; set; }
+        public int? CategoryId { get; set; }
+        public Category? Category { get; set; }
 
-        public Pizza()
+    public Pizza()
         {
 
         }
