@@ -63,3 +63,15 @@ a {
 header, footer {
     background-color: #eae2b7;
 }
+
+.pizza-details-container {
+    padding: 0;
+    background-color: #eae2b7;
+    width: 1000px;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.pizza-details-container > image {
+    margin-left: 0;
+}

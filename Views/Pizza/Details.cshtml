@@ -1,9 +1,9 @@
 ﻿@model Pizza
 
-<div class="container d-flex align-items-center justify-content-center">
-    <image style="width: 500px" src="@Model.Immagine"></image>
-    <div class="d-flex flex-column justify-content-center mx-3">
-        <h1>Nome: @Model.Nome</h1>
+<div class="container pizza-details-container d-flex align-items-center">
+    <image src="@Model.Immagine"></image>
+    <div class="d-flex flex-column mx-4">
+        <h1>@Model.Nome</h1>
         <h2>Categoria: @Model.Category.Titolo</h2>
         <h3>Ingredienti: </h3>
         @foreach (Ingredient ingredient in @Model.Ingredients)
