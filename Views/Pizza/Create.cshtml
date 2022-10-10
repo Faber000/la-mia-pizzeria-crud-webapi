@@ -40,7 +40,7 @@
         </div>
 
         <div class="mb-4">
-            <strong>Categoria: </strong>
+            <h3>Categoria: </h3>
             <select asp-for="Pizza.CategoryId">
 
                 @foreach (Category category in Model.Categories)
@@ -53,6 +53,17 @@
             </select>
             <span asp-validation-for="Pizza.CategoryId"></span>
         </div>
+
+        <div class="mb-4">
+                    <h3>Ingredienti: </h3>
+                    <select multiple="multiple"
+                        asp-for="SelectedIngredients">
+                        @foreach (Ingredient ingredient in Model.Ingredients)
+                        {
+                            <option value="@ingredient.Id">@ingredient.Name</option>
+                        }
+                        </select>
+                </div>
 
         <div>
             <input class="btn submit-button" type="submit" value="Salva"/>

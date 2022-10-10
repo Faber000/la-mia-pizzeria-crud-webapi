@@ -21,6 +21,7 @@ public class Pizza
         public double Prezzo { get; set; }
         public int? CategoryId { get; set; }
         public Category? Category { get; set; }
+        public List<Ingredient>? Ingredients { get; set; }
 
     public Pizza()
         {

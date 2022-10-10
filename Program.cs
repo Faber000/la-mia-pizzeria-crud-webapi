@@ -35,6 +35,7 @@ namespace la_mia_pizzeria_crud_mvc
     {
         public DbSet<Pizza> Pizze { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Ingredient> Ingredients { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
