@@ -76,3 +76,8 @@ header, footer {
     margin-left: 0;
     width: 400px;
 }
+
+.login-button, .register-button {
+    background-color: #eae2b7;
+    height: 50px;
+}
