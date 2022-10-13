@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using System.Linq.Expressions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace la_mia_pizzeria_model.Controllers
 {
+    [Authorize]
     public class PizzaController : Controller
     {
         private readonly ILogger<PizzaController> _logger;

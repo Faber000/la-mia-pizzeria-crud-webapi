@@ -1,5 +1,6 @@
 ﻿using la_mia_pizzeria_crud_mvc.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace la_mia_pizzeria_crud_mvc.Controllers
@@ -13,9 +14,28 @@ namespace la_mia_pizzeria_crud_mvc.Controllers
             _logger = logger;
         }
 
+        [HttpGet]
         public IActionResult Index()
         {
-            return View();
+            using (Pizzeria context = new Pizzeria())
+            {
+
+                List<Pizza> pizze = context.Pizze.ToList();
+
+                return View("Index", pizze);
+            }
+        }
+
+        [HttpGet]
+        public IActionResult Details(int id)
+        {
+            using (Pizzeria context = new Pizzeria())
+            {
+
+                Pizza pizza = context.Pizze.Where(pizza => pizza.Id == id).Include("Category").Include("Ingredients").FirstOrDefault();
+
+                return View("Details", pizza);
+            }
         }
 
         public IActionResult Privacy()
