@@ -74,4 +74,5 @@ header, footer {
 
 .pizza-details-container > image {
     margin-left: 0;
+    width: 400px;
 }
