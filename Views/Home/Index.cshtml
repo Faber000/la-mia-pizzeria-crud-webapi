@@ -6,35 +6,53 @@
 
 <h1 class="text-center">Scopri le nostre pizze!</h1>
 
+<input class="search" type="text" placehoder="Cerca per titolo"/>
+
 <div class="pizza-container d-flex flex-wrap justify-content-center align-items-center">
 
 </div>
 
 
 <script type="text/javascript">
-    axios.get('api/pizza').then( res => {
-        console.log(res);
-        if(res.data.length != 0) {
-            res.data.forEach(pizza => {
-                console.log('pizza', pizza);
-                document.querySelector('.pizza-container').innerHTML +=
-                    `
-                    <div class="card d-flex flex-row">
-                    <div>
-                        <img title="pizza" class="pizza-img" src="${pizza.immagine}"></img>
-                    </div>
 
-                    <div class="d-flex flex-column justify-content-center mx-4">
-                        <div><h4>${pizza.nome}</h4></div>
-                        <div>Descrizione ${pizza.descrizione}</div>
-                        <div>Prezzo: ${pizza.prezzo} $</div>
-                    </div>
-                </div>
-                    `;
-            });
-        }
-    }).catch( err => {
-    });
+    document.querySelector('.search').addEventListener('keyup', SearchPizza);
 
-        console.log(err);
+    function SearchPizza(){
+        let name = this.value;
+        getPizza(name);
+    }
+
+    function getPizza(name) {
+        axios.get('/api/pizza/get', {
+            params: {
+                title: name
+            }
+        }).then(res => {
+            console.log(res);
+            if (res.data.length != 0) {
+                res.data.forEach(pizza => {
+                    console.log('pizza', pizza);
+                    document.querySelector('.pizza-container').innerHTML = '';
+                    document.querySelector('.pizza-container').innerHTML +=
+                        `
+                        <div class="card d-flex flex-row">
+                        <div>
+                            <img title="pizza" class="pizza-img" src="${pizza.immagine}"></img>
+                        </div>
+
+                        <div class="d-flex flex-column justify-content-center mx-4">
+                            <div><h4>${pizza.nome}</h4></div>
+                            <div>Descrizione ${pizza.descrizione}</div>
+                            <div>Prezzo: ${pizza.prezzo} $</div>
+                        </div>
+                    </div>
+                        `;
+                });
+            }
+        }).catch(err => {
+        });
+
+        console.log("errore");
+    }
+    
 </script>

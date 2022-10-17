@@ -4,7 +4,7 @@ using System.Security.Policy;
 
 namespace la_mia_pizzeria_crud_mvc.Controllers.Api
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class PizzaController : ControllerBase
     {
@@ -14,11 +14,23 @@ namespace la_mia_pizzeria_crud_mvc.Controllers.Api
         {
             context = new Pizzeria();
         }
-        public IActionResult Get()
-        {
-            List<Pizza> pizze = context.Pizze.ToList();
 
-            return Ok(pizze);
+        [HttpGet]
+        public IActionResult Get(string? title)
+        {
+            IQueryable<Pizza> pizze;
+
+            if (title != null)
+            {
+                pizze = context.Pizze.Where(pizza => pizza.Nome.ToLower().Contains(title.ToLower()));
+            }
+
+            else
+            {
+                pizze = context.Pizze;
+            }
+
+            return Ok(pizze.ToList<Pizza>());
         }
     }
 }
