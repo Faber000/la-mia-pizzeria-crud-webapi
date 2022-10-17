@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
 using System.Security.Policy;
 
 namespace la_mia_pizzeria_crud_mvc.Controllers.Api
@@ -23,6 +24,7 @@ namespace la_mia_pizzeria_crud_mvc.Controllers.Api
             if (title != null)
             {
                 pizze = context.Pizze.Where(pizza => pizza.Nome.ToLower().Contains(title.ToLower()));
+                
             }
 
             else
@@ -30,7 +32,15 @@ namespace la_mia_pizzeria_crud_mvc.Controllers.Api
                 pizze = context.Pizze;
             }
 
-            return Ok(pizze.ToList<Pizza>());
+            return Ok(pizze);
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult Get(int id)
+        {
+            Pizza pizza = context.Pizze.Where(pizza => pizza.Id == id).FirstOrDefault();
+
+            return Ok(pizza);
         }
     }
 }

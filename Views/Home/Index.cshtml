@@ -7,6 +7,7 @@
 <h1 class="text-center">Scopri le nostre pizze!</h1>
 
 <input class="search" type="text" placehoder="Cerca per titolo"/>
+<button class="search-button">Cerca</button>
 
 <div class="pizza-container d-flex flex-wrap justify-content-center align-items-center">
 
@@ -15,10 +16,12 @@
 
 <script type="text/javascript">
 
-    document.querySelector('.search').addEventListener('keyup', SearchPizza);
+    getPizza("");
+
+    document.querySelector('.search-button').addEventListener('click', SearchPizza);
 
     function SearchPizza(){
-        let name = this.value;
+        let name = document.querySelector('.search').value;
         getPizza(name);
     }
 
@@ -30,9 +33,9 @@
         }).then(res => {
             console.log(res);
             if (res.data.length != 0) {
+                document.querySelector('.pizza-container').innerHTML =''
                 res.data.forEach(pizza => {
                     console.log('pizza', pizza);
-                    document.querySelector('.pizza-container').innerHTML = '';
                     document.querySelector('.pizza-container').innerHTML +=
                         `
                         <div class="card d-flex flex-row">
@@ -44,6 +47,7 @@
                             <div><h4>${pizza.nome}</h4></div>
                             <div>Descrizione ${pizza.descrizione}</div>
                             <div>Prezzo: ${pizza.prezzo} $</div>
+                            <a href="/Home/Details/${pizza.id}">Dettagli</a>
                         </div>
                     </div>
                         `;
