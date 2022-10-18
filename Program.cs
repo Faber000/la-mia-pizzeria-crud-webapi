@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using la_mia_pizzeria_crud_mvc;
+using la_mia_pizzeria_crud_mvc.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("PizzeriaConnection") ?? throw new InvalidOperationException("Connection string 'PizzeriaConnection' not found.");
@@ -61,6 +62,7 @@ namespace la_mia_pizzeria_crud_mvc
         public DbSet<Pizza> Pizze { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }
+        public DbSet<Message> Messages { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
