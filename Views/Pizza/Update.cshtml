@@ -11,28 +11,28 @@
 
         <div class="mb-4">
             <h3>Nome: </h3>
-            <input asp-for="Pizza.Nome" />
+            <input id ="pizza-nome" asp-for="Pizza.Nome" />
             <span asp-validation-for="Pizza.Nome"></span>
 
         </div>
 
         <div class="mb-4">
             <h3>Descrizione: </h3>
-            <input asp-for="Pizza.Descrizione" />
+            <input id ="pizza-descrizione" asp-for="Pizza.Descrizione" />
             <span asp-validation-for="Pizza.Descrizione"></span>
 
         </div>
 
         <div class="mb-4">
             <h3>Immagine: </h3>
-            <input asp-for="Pizza.Immagine" />
+            <input id ="pizza-immagine" asp-for="Pizza.Immagine" />
             <span asp-validation-for="Pizza.Immagine"></span>
 
         </div>
 
         <div class="mb-4">
             <h3>Prezzo: </h3>
-            <input asp-for="Pizza.Prezzo" />
+            <input id="pizza-prezzo" asp-for="Pizza.Prezzo" />
             <span asp-validation-for="Pizza.Prezzo"></span>
 
         </div>
@@ -71,7 +71,23 @@
         </div>
 
         <div>
-            <input class="btn submit-button" type="submit" value="Salva" />
+            <input class="btn submit-button" onClick="updatePizza(@Model.Pizza.Id)" value="Salva" />
         </div>
     </form>
 </div>
+<script type="text/javascript">
+
+    function updatePizza(id) {
+        axios.put('/api/pizza/put/' +id, {
+            Nome: document.querySelector('#pizza-nome').value,
+            Descrizione: document.querySelector('#pizza-descrizione').value,
+            Prezzo: document.querySelector('#pizza-prezzo').value,
+            Immagine: document.querySelector('#pizza-immagine').value,
+        }).then(res => {
+            alert("modifica avvenuta")
+        }).catch(err => {
+            console.log("errore");
+            alert('Dati non validi');
+        })
+    }
+</script>

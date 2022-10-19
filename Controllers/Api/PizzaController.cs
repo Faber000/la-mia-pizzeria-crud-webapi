@@ -62,5 +62,33 @@ namespace la_mia_pizzeria_crud_mvc.Controllers.Api
                 }
             }
         }
+
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, [FromBody] Pizza pizza)
+        {
+            if (!ModelState.IsValid)
+            {
+                return UnprocessableEntity(ModelState);
+            }
+            using (Pizzeria context = new Pizzeria())
+            {
+                Pizza pizzaDaModificare = context.Pizze
+                .Where(p=> p.Id == id).FirstOrDefault();
+
+                if (pizzaDaModificare != null)
+                {
+                    pizzaDaModificare.Nome = pizza.Nome;
+                    pizzaDaModificare.Descrizione = pizza.Descrizione;
+                    pizzaDaModificare.Immagine = pizza.Immagine;
+                    pizzaDaModificare.Prezzo = pizza.Prezzo;
+                    context.SaveChanges();
+                    return Ok();
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+        }
     }
 }
