@@ -31,7 +31,7 @@
 
     function InviaMessaggio(e) {
         e.preventDefault();
-        axios.post("/api/message/send", {
+        axios.post('/api/message/send/', {
             email: document.querySelector('#contact-email').value,
             name: document.querySelector('#contact-name').value,
             title: document.querySelector('#contact-title').value,
@@ -46,6 +46,5 @@
             console.log("errore");
             alert('Dati non validi');
         })
-
     }
 </script>

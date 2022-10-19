@@ -21,16 +21,24 @@
                     <a href="@Url.Action("Update", "Pizza", new { id = pizza.Id})">
                         <button>Modifica</button>
                     </a>
-
-                    <form asp-controller="Pizza" asp-action="Delete" asp-route-id="@pizza.Id" method="post">
-                        @Html.AntiForgeryToken()
-                        <button type="submit">Elimina</button>
-                    </form>
+                    <button onClick="deletePizza(@pizza.Id)">Elimina</button>
                 </div>
             </div>
         </div>
     }
 </div>
+<script>
+
+    function deletePizza(id) {
+        axios.delete('/api/pizza/delete/' +id).then(res => {
+        }).catch(err => {
+            console.log("errore");
+            alert('Errore');
+        })
+        location.reload();  
+    }
+ 
+</script>
 
 
 

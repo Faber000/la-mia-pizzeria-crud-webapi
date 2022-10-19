@@ -13,10 +13,10 @@ namespace la_mia_pizzeria_crud_mvc.Controllers.Api
         public IActionResult Send([FromBody] Message message)
         {
 
-            Pizzeria context = new Pizzeria();
+            Pizzeria ctx = new Pizzeria();
 
-            context.Messages.Add(message);
-            context.SaveChanges();
+            ctx.Messages.Add(message);
+            ctx.SaveChanges();
 
             return Ok();
         }
